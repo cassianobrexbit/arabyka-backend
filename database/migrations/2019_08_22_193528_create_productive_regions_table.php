@@ -18,6 +18,7 @@ class CreateProductiveRegionsTable extends Migration
             $table->string('name')->unique();
             $table->boolean('status');
             $table->bigInteger('state_id');
+            $table->bigInteger('insert_user_id');
             $table->timestamps();
         });
     }

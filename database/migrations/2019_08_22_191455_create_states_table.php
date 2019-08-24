@@ -18,6 +18,7 @@ class CreateStatesTable extends Migration
             $table->string('name')->unique();
             $table->string('code')->unique();
             $table->bigInteger('country_id');
+            $table->bigInteger('insert_user_id');
             $table->boolean('status');
             $table->timestamps();
         });

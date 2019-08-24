@@ -28,6 +28,7 @@ class CreateFarmsTable extends Migration
             $table->boolean('status');
             $table->bigInteger('county_id');
             $table->bigInteger('user_id');
+            $table->bigInteger('insert_user_id');
             $table->timestamps();
         });
     }

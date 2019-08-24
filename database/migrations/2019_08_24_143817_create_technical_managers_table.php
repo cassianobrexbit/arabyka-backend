@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateCountiesTable extends Migration
+class CreateTechnicalManagersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,13 @@ class CreateCountiesTable extends Migration
      */
     public function up()
     {
-        Schema::create('counties', function (Blueprint $table) {
+        Schema::create('technical_managers', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('name')->unique();
-            $table->string('ibge_code')->unique();
-            $table->boolean('status');
-            $table->string('productive_region_id');
+            $table->string('arabyka_credential')->unique();
+            $table->string('councyl_register')->unique();
+            $table->bigInteger('user_id')->unique();
             $table->bigInteger('insert_user_id');
+            $table->boolean('status');
             $table->timestamps();
         });
     }
@@ -31,6 +31,6 @@ class CreateCountiesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('counties');
+        Schema::dropIfExists('technical_managers');
     }
 }

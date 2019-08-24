@@ -23,4 +23,6 @@ Route::group(['middleware' => 'auth:api'], function(){
   Route::apiResource('counties', 'API\CountyController');
   Route::apiResource('regions', 'API\ProductiveRegionController');
   Route::apiResource('farms', 'API\FarmController');
+  Route::apiResource('auditors', 'API\AuditorController');
+  Route::apiResource('managers', 'API\TechnicalManagerController');
 });

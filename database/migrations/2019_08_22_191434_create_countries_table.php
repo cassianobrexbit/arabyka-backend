@@ -18,6 +18,7 @@ class CreateCountriesTable extends Migration
             $table->string('name');
             $table->string('code');
             $table->boolean('status');
+            $table->bigInteger('insert_user_id');
             $table->timestamps();
         });
     }

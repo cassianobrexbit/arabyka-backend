@@ -48,4 +48,14 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function manager()
+    {
+        return $this->hasOne('App\TechnicalManager');
+    }
+
+    public function auditor()
+    {
+        return $this->hasOne('App\Auditor');
+    }
 }
