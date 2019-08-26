@@ -12,6 +12,7 @@ class TechnicalManager extends Model
       'user_id',
       'councyl_register',
       'status',
+      'insert_user_id',
   ];
 
   public function user(){

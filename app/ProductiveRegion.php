@@ -11,6 +11,7 @@ class ProductiveRegion extends Model
     'name',
     'status',
     'state_id',
+    'insert_user_id',
 
   ];
 

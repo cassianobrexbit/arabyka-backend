@@ -43,4 +43,14 @@ class CountryController extends Controller
 
         return new CountryResource($country);
     }
+
+    public function update(Request $request, $id)
+    {
+      $country = Country::find($id);
+
+      $country->update($request->only(['status']));
+
+      return new CountryResource($country);
+
+    }
 }

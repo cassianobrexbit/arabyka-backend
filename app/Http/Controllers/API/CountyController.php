@@ -44,4 +44,15 @@ class CountyController extends Controller
 
         return new CountyResource($county);
     }
+
+    public function update(Request $request, $id)
+    {
+      $county = County::find($id);
+
+      $county->update($request->only(['status']));
+
+      return new CountyResource($county);
+
+    }
+
 }

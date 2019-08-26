@@ -19,7 +19,6 @@ class CreateCountiesTable extends Migration
             $table->string('ibge_code')->unique();
             $table->boolean('status');
             $table->string('productive_region_id');
-            $table->bigInteger('insert_user_id');
             $table->timestamps();
         });
     }

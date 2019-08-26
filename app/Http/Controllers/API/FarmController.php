@@ -9,6 +9,7 @@ use App\ProductiveUnity;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\FarmResource;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 class FarmController extends Controller
 {
@@ -40,6 +41,7 @@ class FarmController extends Controller
         'status' => $request->status,
         'county_id' => $request->county_id,
         'user_id' => $request->user_id,
+        'insert_user_id' => \Auth::id(),
 
       ]);
 
@@ -52,5 +54,21 @@ class FarmController extends Controller
         $farm = Farm::find($id);
 
         return new FarmResource($farm);
+    }
+
+    public function update(Request $request, $id)
+    {
+
+      $farm = Farm::find($id);
+
+      if ($farm->insert_user_id == \Auth::id()) {
+
+          $farm->update($request->only(['status']));
+
+          return new FarmResource($farm);
+      }
+
+      return new FarmResource($farm);
+
     }
 }

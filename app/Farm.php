@@ -21,6 +21,7 @@ class Farm extends Model
     'status',
     'county_id',
     'user_id',
+    'insert_user_id',
 
   ];
 

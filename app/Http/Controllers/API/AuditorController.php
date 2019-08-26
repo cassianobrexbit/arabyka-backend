@@ -8,6 +8,7 @@ use App\Auditor;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\AuditorResource;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 class AuditorController extends Controller
 {
@@ -26,10 +27,11 @@ class AuditorController extends Controller
     {
       $auditor = Auditor::create([
 
-        'arabyka_credential' => $request->arabyka_credential,
+        'arabyka_credential' => 'ARBK'.Carbon::now()->year.'AD'.(\DB::table('auditors')->count() + 1),
         'status' => $request->status,
         'councyl_register' => $request->councyl_register,
         'user_id' => $request->user_id,
+        'insert_user_id' => \Auth::id(),
 
       ]);
 
@@ -48,10 +50,14 @@ class AuditorController extends Controller
     {
       $auditor = Auditor::find($id);
 
-      $auditor->update($request->only(['status']));
+      if ($auditor->insert_user_id == \Auth::id()) {
+
+          $auditor->update($request->only(['status']));
+
+          return new AuditorResource($auditor);
+      }
 
       return new AuditorResource($auditor);
-
 
     }
 }

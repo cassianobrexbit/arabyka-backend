@@ -18,6 +18,9 @@ Route::post('register', 'API\UserController@register');
 
 Route::group(['middleware' => 'auth:api'], function(){
   Route::post('details', 'API\UserController@details');
+  Route::get('logout', 'API\UserController@logout');
+  Route::put('users/edit/{id}', 'API\UserController@edit');
+  Route::apiResource('roles','API\RoleController');
   Route::apiResource('countries', 'API\CountryController');
   Route::apiResource('states', 'API\StateController');
   Route::apiResource('counties', 'API\CountyController');

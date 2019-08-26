@@ -5,6 +5,7 @@ use App\Http\Controllers\Controller;
 use App\User;
 use Illuminate\Support\Facades\Auth;
 use Validator;
+use Illuminate\Support\Facades\DB;
 
 
 class UserController extends Controller
@@ -72,7 +73,7 @@ class UserController extends Controller
         $success['cep'] =  $user->cep;
         $success['phone'] =  $user->phone;
         $success['cell_phone'] =  $user->cell_phone;
-        $success['is_active'] =  $user->is_active;
+        $success['status'] =  $user->status;
         $success['county_id'] =  $user->county_id;
 
         return response()->json(['success'=>$success], $this-> successStatus);
@@ -88,5 +89,34 @@ class UserController extends Controller
     {
         $user = Auth::user();
         return response()->json(['success' => $user], $this-> successStatus);
+    }
+
+    public function logout() {
+
+        $accessToken = Auth::user()->token();
+        DB::table('oauth_refresh_tokens')
+            ->where('access_token_id', $accessToken->id)
+            ->update([
+                'revoked' => true
+            ]);
+
+        $accessToken->revoke();
+        return response()->json(null, 204);
+    }
+
+    public function edit(Request $request, $id)
+    {
+
+      $user = User::find($id);
+
+      //if ($user->insert_user_id == \Auth::id()) {
+
+          $user->update($request->only(['is_active','address','cep','phone','cell_phone','county_id']));
+
+          //return new FarmResource($user);
+      //}
+
+      return response()->json(['success' => $user], $this-> successStatus);
+
     }
 }

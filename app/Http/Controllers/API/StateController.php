@@ -44,4 +44,14 @@ class StateController extends Controller
 
         return new StateResource($state);
     }
+
+    public function update(Request $request, $id)
+    {
+      $state = State::find($id);
+
+      $state->update($request->only(['status']));
+
+      return new StateResource($state);
+
+    }
 }

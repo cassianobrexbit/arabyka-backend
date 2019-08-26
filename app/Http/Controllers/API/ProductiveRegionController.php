@@ -9,6 +9,7 @@ use App\County;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\ProductiveRegionResource;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 class ProductiveRegionController extends Controller
 {
@@ -30,6 +31,7 @@ class ProductiveRegionController extends Controller
         'name' => $request->name,
         'status' => $request->status,
         'state_id' => $request->state_id,
+        'insert_user_id' => \Auth::id(),
 
       ]);
 
@@ -42,5 +44,20 @@ class ProductiveRegionController extends Controller
         $region = ProductiveRegion::find($id);
 
         return new ProductiveRegionResource($region);
+    }
+
+    public function update(Request $request, $id)
+    {
+      $region = ProductiveRegion::find($id);
+
+      if ($region->insert_user_id == \Auth::id()) {
+
+          $region->update($request->only(['status']));
+
+          return new ProductiveRegionResource($region);
+      }
+
+      return new ProductiveRegionResource($region);
+
     }
 }

@@ -53,4 +53,20 @@ class ProductiveUnityController extends Controller
 
         return new ProductiveUnityResource($productiveUnity);
     }
+
+    public function update(Request $request, $id)
+    {
+      
+      $productiveUnity = ProductiveUnity::find($id);
+
+      if ($productiveUnity->insert_user_id == \Auth::id()) {
+
+          $productiveUnity->update($request->only(['status']));
+
+          return new ProductiveUnityResource($productiveUnity);
+      }
+
+      return new ProductiveUnityResource($productiveUnity);
+
+    }
 }

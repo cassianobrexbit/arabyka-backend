@@ -8,6 +8,7 @@ use App\TechnicalManager;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\TechnicalManagerResource;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 class TechnicalManagerController extends Controller
 {
@@ -26,10 +27,11 @@ class TechnicalManagerController extends Controller
     {
       $manager = TechnicalManager::create([
 
-        'arabyka_credential' => $request->arabyka_credential,
+        'arabyka_credential' => 'ARBK'.Carbon::now()->year.'RT'.(\DB::table('technical_managers')->count() + 1),
         'status' => $request->status,
         'councyl_register' => $request->councyl_register,
         'user_id' => $request->user_id,
+        'insert_user_id' => \Auth::id(),
 
       ]);
 
@@ -42,5 +44,21 @@ class TechnicalManagerController extends Controller
         $manager = TechnicalManager::find($id);
 
         return new TechnicalManagerResource($manager);
+    }
+
+    public function update(Request $request, $id)
+    {
+      
+        $manager = TechnicalManager::find($id);
+
+        if ($manager->insert_user_id == \Auth::id()) {
+
+            $manager->update($request->only(['status']));
+
+            return new TechnicalManagerResource($manager);
+        }
+
+        return new TechnicalManagerResource($manager);
+
     }
 }
