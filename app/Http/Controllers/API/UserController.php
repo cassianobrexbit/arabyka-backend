@@ -53,6 +53,7 @@ class UserController extends Controller
             'is_active' => 'required',
             'county_id' => 'required',
             'c_password' => 'required|same:password',
+            'roles' => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -63,6 +64,8 @@ class UserController extends Controller
 
         $input['password'] = bcrypt($input['password']);
         $user = User::create($input);
+
+        $user->assignRole($request->input('roles'));
 
         $success['token'] =  $user->createToken('MyApp')-> accessToken;
         $success['email'] =  $user->email;
